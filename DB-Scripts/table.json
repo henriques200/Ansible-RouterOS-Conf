@@ -1,0 +1,1 @@
+"{\"routeros\": {\"hosts\": [\"192.168.0.180\", \"192.168.0.182\"], \"vars\": {\"ansible_network_os\": \"routeros\", \"ansible_user\": \"admin\", \"ansible_password\": \"\", \"ansible_connection\": \"network_cli\"}}}"
