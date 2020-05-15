@@ -1,0 +1,69 @@
+---
+- name: Configuring Router
+  hosts: mikrotikrouters
+  gather_facts: no
+  
+  vars:
+    name_backup: test_{{ inventory_hostname }}
+
+  tasks:
+    - name: Getting OS Date
+      routeros_command:
+        commands: :put [system clock get date]
+      register: date
+
+    - name: Getting OS Time
+      routeros_command:
+        commands: :put [system clock get time]
+      register: time
+
+    - name: Doing Backup
+      routeros_command:
+        commands: /system backup save name={{ name_backup }} password=1234
+    
+    - name: Getting BackUps
+      routeros_command:
+        commands: /file print
+      register: output_backup
+
+    - name: See BackUps
+      debug:
+       msg: "{{ output_backup }}"
+
+    - name: Get IP address table
+      routeros_command:
+        commands: /ip address print
+      register: output_iptable
+
+    - name: Show IP address table
+      debug:
+       msg: "{{ output_iptable }}"
+    
+    - name: Checking for OS updates
+      routeros_command:
+        commands: /system package update check-for-updates
+      register: output_update
+
+    - name: Downloading New RouterOS version
+      routeros_command:
+        commands: /system package up install
+      when: output_update.stdout is search('available')
+
+    - name: Get RouterOS version
+      routeros_command:
+        commands: /system package update print
+      register: output_routeros_version
+
+    - name: Show RouterOS version
+      debug:
+       msg: "{{ output_routeros_version }}"
+
+#    - name: Exporting BackUp
+#      routeros_command:
+#        commands: /export file={{ name_backup }}
+
+#    - name: Downloading BackUp
+#      get_url:
+#       url: ftp://admin@{{ inventory_hostname }}/{{ name_backup }}.rsc
+#        dest: /root/mikrotik/backups/
+...
