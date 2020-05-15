@@ -58,12 +58,12 @@
       debug:
        msg: "{{ output_routeros_version }}"
 
-#    - name: Exporting BackUp
-#      routeros_command:
-#        commands: /export file={{ name_backup }}
+    - name: Exporting BackUp
+      routeros_command:
+        commands: /export file={{ name_backup }}
 
-#    - name: Downloading BackUp
-#      get_url:
-#       url: ftp://admin@{{ inventory_hostname }}/{{ name_backup }}.rsc
-#        dest: /root/mikrotik/backups/
+    - name: Downloading BackUp
+      get_url:
+       url: ftp://admin@{{ inventory_hostname }}/{{ name_backup }}.rsc
+        dest: /root/mikrotik/backups/
 ...
