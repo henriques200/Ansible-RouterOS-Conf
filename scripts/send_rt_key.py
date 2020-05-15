@@ -3,6 +3,12 @@
 
 import pexpect
 
+'''
+Put remote IPs in ip.txt file or change the file name.
+Copy ip addresses from txt file and send ssh commands
+  to the remote machines. 
+'''
+
 ip_file = open("ip.txt")
 ip_list = ip_file.read().splitlines()
 ip_file.close()
