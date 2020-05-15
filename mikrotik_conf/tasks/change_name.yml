@@ -1,0 +1,13 @@
+---
+- name: Verify Hostname
+  routeros_command:
+    commands: /system identity print
+  register: current_name
+- name: See hostname
+  debug:
+   msg: "{{ current_name.stdout }}"
+- name: Change Hostname
+  routeros_command:
+    commands: /system identity set name={{ router_hostname }}
+  when: current_name.stdout is search('MikroTik')
+...

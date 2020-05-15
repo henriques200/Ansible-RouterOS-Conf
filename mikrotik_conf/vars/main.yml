@@ -1,0 +1,5 @@
+---
+# vars file for mikrotik_conf
+BackupName: "{{ inventory_hostname }}_backup"
+router_hostname: "Router_{{ inventory_hostname }}"
+...

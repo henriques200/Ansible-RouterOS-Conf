@@ -1,0 +1,17 @@
+--- 
+- name: Get RouterOS version
+  routeros_command:
+   commands: /system package update print
+  register: output_routeros_version
+- name: Show RouterOS version
+  debug:
+   msg: "{{ output_routeros_version }}"
+- name: Checking for OS updates 
+  routeros_command: 
+   commands: /system package update check-for-updates 
+  register: output_update
+- name: Downloading New RouterOS version 
+  routeros_command:
+   commands: /system package up install 
+  when: output_update.stdout is search('available')
+...

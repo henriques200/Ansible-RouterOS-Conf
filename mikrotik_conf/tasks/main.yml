@@ -1,0 +1,10 @@
+---
+# tasks file for mikrotik_conf
+- name: Mikrotik - Change hostname
+  include_tasks: change_name.yml
+- name: Mikrotik - Backups
+  include_tasks: backup.yml
+#  when: group_names is search('routeros2')
+- name: Mikrotik - Update OS
+  include_tasks: update_os.yml
+...

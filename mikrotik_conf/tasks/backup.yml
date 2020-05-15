@@ -1,0 +1,12 @@
+---
+- name: Execute a Backup 
+  routeros_command: 
+   commands: /system backup save name={{ BackupName }} password=1234
+- name: Getting BackUps 
+  routeros_command:
+   commands: /file print 
+  register: output_backup
+- name: See Backups 
+  debug:
+   msg: "{{ output_backup }}"
+...

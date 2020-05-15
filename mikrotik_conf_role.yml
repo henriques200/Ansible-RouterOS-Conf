@@ -1,0 +1,7 @@
+---
+- name: Mikrotik configuration role
+  hosts: routeros
+  gather_facts: no
+  roles:
+    - mikrotik_conf
+...
