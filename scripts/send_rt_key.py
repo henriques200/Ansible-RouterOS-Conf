@@ -2,6 +2,7 @@
 #-*- coding: utf-8 -*-
 
 import pexpect
+import subprocess
 
 '''
 Put remote IPs in ip.txt file or change the file name.
@@ -15,12 +16,17 @@ ip_file.close()
 
 for ip in ip_list:
     ssh_command = "ssh admin@{}".format(ip)
-    try:
-        ssh = pexpect.spawn(ssh_command)
-        ssh.expect(' (yes/no)?')
-        ssh.sendline('yes')
-        ssh.expect('] >')
-        ssh.sendline('quit')
-        print("{} OK!".format(ip))
-    except:
-        print("Erro com o IP {}!".format(ip))
+    ping = subprocess.run(['ping', '-c 2', ip], stdout=subprocess.PIPE)
+    output_ping = ping.stdout.decode("utf-8")
+    if(output_ping.find("100% packet loss")):
+        print("ERRO - IP {} nao esta disponivel!".format(ip))
+    else:
+        try:
+            ssh = pexpect.spawn(ssh_command)
+            ssh.expect(' (yes/no)?')
+            ssh.sendline('yes')
+            ssh.expect('] >')
+            ssh.sendline('quit')
+            print("{} OK!".format(ip))
+        except:
+            print("Erro com o IP {}!".format(ip))
