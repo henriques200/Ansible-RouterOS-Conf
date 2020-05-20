@@ -13,7 +13,7 @@ try:
     # Fetch all data from table
     cursor.execute("SELECT * from routers;")
     record = cursor.fetchall()
-    # print("Output data:", record)
+    # Print the output
     for output in record:
         print(output)
 
