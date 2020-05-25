@@ -1,0 +1,47 @@
+#!/usr/bin/python3
+# -*- coding:utf-8 -*-
+
+import psycopg2
+
+
+def get_command(descricao):
+    '''
+    get_command(descricao)
+    > Returns a string with the mikrotik command
+      asked by the user.
+    > Returns None and a print error if the connection
+      is not well configured.
+    > descricao var is the command description.
+      String required.
+    '''
+    try:
+        connection = psycopg2.connect(user = "postgres",
+                                      password = "123",
+                                      host = "127.0.0.1",
+                                      port = "5432",
+                                      database = "mikrotik")
+
+        cursor = connection.cursor()
+        # Execute the sql_query with the data required
+        sql_query = "SELECT * from comandos_mikrotik WHERE descricao = %s"
+        data = (descricao, )
+        cursor.execute(sql_query, data)
+        # Fetch the output and return it
+        record = cursor.fetchone()
+        output = record[1]
+        return output
+    except (Exception, psycopg2.Error) as error :
+        print("Error while connecting to PostgreSQL", error)
+        return None
+    finally:
+        #closing database connection.
+        if(connection):
+            cursor.close()
+            connection.close()
+            print("PostgreSQL connection is closed")
+
+
+
+if(__name__ == '__main__'):
+    comando = get_command("Nota do sistema")
+    print(comando)
