@@ -1,0 +1,21 @@
+
+---
+- name: Test PostgresSQL queries
+  hosts: localhost 
+  gather_facts: no
+  tasks:
+    - name: Execute SQL query to get command
+      postgresql_query:
+        db: mikrotik
+        login_host: 172.18.0.2
+        login_user: postgres
+        login_password: 123
+        query: "SELECT * from comandos_mikrotik WHERE descricao = %s"
+        positional_args:
+          - "Nota do sistema"
+#      delegate_to: localhost
+      register: command
+    - name: Show output
+      debug:
+        msg: "{{ command }}" 
+...
