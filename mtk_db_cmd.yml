@@ -1,0 +1,16 @@
+---
+- name: Execute Mikrotik commands from a Database
+  hosts: routeros
+  gather_facts: no
+  tasks:
+     - name: Run a script to fetch the command
+       script: scripts/mtk_sys_note.py
+       register: command
+       delegate_to: localhost
+     - name: See output
+       debug:
+         msg: "{{ command.stdout_lines }}"
+     - name: Execute command on router
+       routeros_command:
+         commands: "{{ command.stdout_lines }}"
+...
