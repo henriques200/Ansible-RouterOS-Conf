@@ -38,7 +38,7 @@ def get_command(descricao):
         if(connection):
             cursor.close()
             connection.close()
-            print("PostgreSQL connection is closed")
+            # print("PostgreSQL connection is closed")
 
 
 
