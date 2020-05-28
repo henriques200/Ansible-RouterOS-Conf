@@ -1,0 +1,20 @@
+
+---
+# Playbook to run a certain list of commands stored in a DB
+- name: Run commands in mikrotik devices
+  hosts: routeros
+  gather_facts: no
+  tasks:
+     - name: Run a script to fetch the commands
+       script: scripts/mtk_sys_note.py
+       register: command
+       delegate_to: localhost
+     - name: See output (testing porposes)
+       debug:
+         msg: "{{ item }}"
+       loop: "{{ command.stdout_lines }}"
+     - name: Execute commands on routers
+       routeros_command:
+         commands: "{{ item }}"
+       loop: "{{ command.stdout_lines }}"
+...
