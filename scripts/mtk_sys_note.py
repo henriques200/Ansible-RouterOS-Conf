@@ -38,18 +38,15 @@ def get_command(descricao):
         if(connection):
             cursor.close()
             connection.close()
-            # print("PostgreSQL connection is closed")
 
 
 def get_all_commands():
     '''
-    get_command(descricao)
-    > Returns a string with the mikrotik command
-      asked by the user.
+    get_all_commands()
+    > Returns a list with all the mikrotik commands
+      available on the DB.
     > Returns None and a print error if the connection
       is not well configured.
-    > descricao var is the command description.
-      String required.
     '''
     try:
         connection = psycopg2.connect(user = "postgres",
@@ -77,7 +74,6 @@ def get_all_commands():
         if(connection):
             cursor.close()
             connection.close()
-            # print("PostgreSQL connection is closed")
 
 
 
