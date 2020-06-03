@@ -20,13 +20,8 @@ def get_hosts():
     hosts = []
     cursor = connection.cursor()
     # All IPs from a table
-    if(code == "1"):
-        sql_query = ("SELECT ip_nome FROM routers")
-        cursor.execute(sql_query, )
-    elif(code == "2"):
-        sql_query = ("SELECT ip_nome FROM routers WHERE ip_nome = %s")
-        data = ()
-        cursor.execute(sql_query, data)
+    sql_query = ("SELECT ip_nome FROM routers")
+    cursor.execute(sql_query, )
     # Fetch all IP addresses and save to a list
     record = cursor.fetchall()
     for result in record:
