@@ -116,7 +116,6 @@ Escolha uma das opcoes: """)
             print("Descricoes Disponiveis que pode escolher: ip")
             desc = input("Insira a descricao para obter os comandos: ")
             description(desc)
-            
         elif(choice == "E" or choice == "e"):
             numb_list = []
             while(True):
